@@ -404,12 +404,12 @@ export class VistaOutfits {
         //PASAR VALORES DE SELECTS A LOS METODOS
         let valorClase = null
         let respuestaPrendas = null
-        /* let respuestaCabeza = null
+        let respuestaCabeza = null
         let respuestaTorso = null
         let respuestaPiernas = null
-        let respuestaPies = null */
+        let respuestaPies = null
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < botonInsertar.length; i++) {
             botonInsertar[i].onclick = async () => {
 
                 //Metodos de inserción con mensajes
@@ -447,31 +447,58 @@ export class VistaOutfits {
                     let idOutfit = outfitsCargados[i].value
                     let prendaCabezaOutfit = await Controlador.cargarPrendasCabezaOutfit(idOutfit)
                     let prendaTorsoOutfit = await Controlador.cargarPrendasTorsoOutfit(idOutfit)
-                    let prendaPiernasOutfit = await Controlador.cargarPrendasPiesOutfit(idOutfit)
+                    let prendaPiernasOutfit = await Controlador.cargarPrendasPiernasOutfit(idOutfit)
                     let prendaPiesOutfit = await Controlador.cargarPrendasPiesOutfit(idOutfit)
                     if (nombreOufit[i].value == '') {
-                        try {
-                            respuestaCabeza = await Controlador.modificarOutfit(prendaCabezaOutfit[0].idPrenda, selectCabeza[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
-                            respuestaTorso = await Controlador.modificarOutfit(prendaTorsoOutfit[0].idPrenda, selectTorso[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
-                            respuestaPiernas = await Controlador.modificarOutfit(prendaPiernasOutfit[0].idPrenda, selectPiernas[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
-                            respuestaPies = await Controlador.modificarOutfit(prendaPiesOutfit[0].idPrenda, selectPies[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
-                            location.reload()
-                        } catch (error) {
-                            VistaOutfits.mostrarMensaje(respuestaPrendas.mensaje)
+                        console.log(i);
+                        respuestaCabeza = await Controlador.modificarOutfit(prendaCabezaOutfit[0].idPrenda, selectCabeza[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
+                        respuestaTorso = await Controlador.modificarOutfit(prendaTorsoOutfit[0].idPrenda, selectTorso[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
+                        respuestaPiernas = await Controlador.modificarOutfit(prendaPiernasOutfit[0].idPrenda, selectPiernas[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
+                        respuestaPies = await Controlador.modificarOutfit(prendaPiesOutfit[0].idPrenda, selectPies[i].value, outfitsCargados[i].value, 'Outfit sin nombre')
+
+                        if (!respuestaCabeza.success) {
+                            VistaOutfits.mostrarMensaje(respuestaCabeza.mensaje)
                             panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else if (!respuestaTorso.success) {
+                            VistaOutfits.mostrarMensaje(respuestaTorso.mensaje)
+                            panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else if (!respuestaPiernas.success) {
+                            VistaOutfits.mostrarMensaje(respuestaPiernas.mensaje)
+                            panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else if (!respuestaPies.success) {
+                            VistaOutfits.mostrarMensaje(respuestaPies.mensaje)
+                            panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else {
+                            location.reload()
                         }
                     }
                     else {
-                        try {
-                            respuestaCabeza = await Controlador.modificarOutfit(prendaCabezaOutfit[0].idPrenda, selectCabeza[i].value, outfitsCargados[i].value, nombreOufit[i].value)
-                            respuestaTorso = await Controlador.modificarOutfit(prendaTorsoOutfit[0].idPrenda, selectTorso[i].value, outfitsCargados[i].value, nombreOufit[i].value)
-                            respuestaPiernas = await Controlador.modificarOutfit(prendaPiernasOutfit[0].idPrenda, selectPiernas[i].value, outfitsCargados[i].value, nombreOufit[i].value)
-                            respuestaPies = await Controlador.modificarOutfit(prendaPiesOutfit[0].idPrenda, selectPies[i].value, outfitsCargados[i].value, nombreOufit[i].value)
-                            location.reload()
-                        } catch (error) {
-                            VistaOutfits.mostrarMensaje(respuestaPrendas.mensaje)
+
+                        respuestaCabeza = await Controlador.modificarOutfit(prendaCabezaOutfit[0].idPrenda, selectCabeza[i].value, outfitsCargados[i].value, nombreOufit[i].value)
+
+                        respuestaTorso = await Controlador.modificarOutfit(prendaTorsoOutfit[0].idPrenda, selectTorso[i].value, outfitsCargados[i].value, nombreOufit[i].value)
+
+                        respuestaPiernas = await Controlador.modificarOutfit(prendaPiernasOutfit[0].idPrenda, selectPiernas[i].value, outfitsCargados[i].value, nombreOufit[i].value)
+
+                        respuestaPies = await Controlador.modificarOutfit(prendaPiesOutfit[0].idPrenda, selectPiernas[i].value, outfitsCargados[i].value, nombreOufit[i].value)
+
+                        if (!respuestaCabeza.success) {
+                            VistaOutfits.mostrarMensaje(respuestaCabeza.mensaje)
                             panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else if (!respuestaTorso.success) {
+                            VistaOutfits.mostrarMensaje(respuestaTorso.mensaje)
+                            panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else if (!respuestaPiernas.success) {
+                            VistaOutfits.mostrarMensaje(respuestaPiernas.mensaje)
+                            panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else if (!respuestaPies.success) {
+                            VistaOutfits.mostrarMensaje(respuestaPies.mensaje)
+                            panel.onclick = () => { VistaOutfits.ocultarMensaje() }
+                        } else {
+                            location.reload()
                         }
+                        /* VistaOutfits.mostrarMensaje('Algo no ha ido bien')
+                        panel.onclick = () => { VistaOutfits.ocultarMensaje() } */
                     }
                 }
             }

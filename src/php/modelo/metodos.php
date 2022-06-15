@@ -813,7 +813,6 @@ class Metodos
         $idUsuario = $fila['idUsuario'];
 
         $consulta2 = "SELECT prenda.idPrenda, prenda.nombrePrenda, subcategoria.nombreSubcategoria  FROM prenda 
-        LEFT JOIN relprendaoutfit ON relprendaoutfit.idPrenda = prenda.idPrenda
         LEFT JOIN subcategoria ON subcategoria.idSubcategoria = prenda.idSubcategoria
         WHERE prenda.idUsuario =$idUsuario AND subcategoria.idCategoria =1
         ORDER BY subcategoria.nombreSubcategoria ASC
@@ -856,7 +855,6 @@ class Metodos
         $idUsuario = $fila['idUsuario'];
 
         $consulta2 = "SELECT prenda.idPrenda, prenda.nombrePrenda, subcategoria.nombreSubcategoria  FROM prenda 
-        LEFT JOIN relprendaoutfit ON relprendaoutfit.idPrenda = prenda.idPrenda
         LEFT JOIN subcategoria ON subcategoria.idSubcategoria = prenda.idSubcategoria
         WHERE prenda.idUsuario =$idUsuario AND subcategoria.idCategoria =2
         ORDER BY subcategoria.nombreSubcategoria ASC
@@ -899,7 +897,6 @@ class Metodos
         $idUsuario = $fila['idUsuario'];
 
         $consulta2 = "SELECT prenda.idPrenda, prenda.nombrePrenda, subcategoria.nombreSubcategoria  FROM prenda 
-        LEFT JOIN relprendaoutfit ON relprendaoutfit.idPrenda = prenda.idPrenda
         LEFT JOIN subcategoria ON subcategoria.idSubcategoria = prenda.idSubcategoria
         WHERE prenda.idUsuario =$idUsuario AND subcategoria.idCategoria =3
         ORDER BY subcategoria.nombreSubcategoria ASC
@@ -942,7 +939,6 @@ class Metodos
         $idUsuario = $fila['idUsuario'];
 
         $consulta2 = "SELECT prenda.idPrenda, prenda.nombrePrenda, subcategoria.nombreSubcategoria  FROM prenda 
-        LEFT JOIN relprendaoutfit ON relprendaoutfit.idPrenda = prenda.idPrenda
         LEFT JOIN subcategoria ON subcategoria.idSubcategoria = prenda.idSubcategoria
         WHERE prenda.idUsuario =$idUsuario AND subcategoria.idCategoria =4
         ORDER BY subcategoria.nombreSubcategoria ASC
@@ -1353,20 +1349,24 @@ class Metodos
     {
 
         if ($idPrendaNueva == '') {
-            $idPrendaNueva = "null";
+            $idPrendaNueva = 0;//'null';
         }
         if ($idPrenda == '') {
-            $idPrenda = 'null';
+            $idPrenda = 0;//'null';
         }
 
         $consultaRelacionOutfit = "UPDATE `relprendaoutfit` SET `idPrenda`= $idPrendaNueva WHERE idOutfit = $idOutfit and idPrenda = $idPrenda ";
         $consulta = "UPDATE `outfit` SET `nombreOutfit`= '$nombreOutfit' WHERE idOutfit = $idOutfit";
-        if (!$this->conexion->consultas($consultaRelacionOutfit)) {
+        $fila = $this->conexion->consultas($consultaRelacionOutfit);
+
+        if (!($this->conexion->consultas($consultaRelacionOutfit))) {
+            /* echo 'false 1'; */
             return false;
         } elseif ($this->conexion->filasAfectadas() == 0) {
             if ($idPrendaNueva == 'null') {
                 $consultaDelete = "DELETE FROM relprendaoutfit WHERE idPrenda = 0";
                 if (!$this->conexion->consultas($consultaDelete)) {
+                    //echo 'primer echo';
                     return false;
                 }
             } elseif ($idPrendaNueva != 'null' && $idPrenda == 'null') {
@@ -1382,15 +1382,18 @@ class Metodos
                     //Ejecutamos con execute
                     if (!$sentencia->execute()) {
                         //echo "Algo fallo en la ejecucion";
-
+                        //echo 'segundo';
                         return false;
                     } else {
+                        //echo 'tercero';
                         return true;
                     }
                 }
             } elseif (!$this->conexion->consultas($consulta)) {
+                //echo 'cuarto';
                 return false;
             } else {
+                //echo 'quinto';
                 return true;
             }
         }

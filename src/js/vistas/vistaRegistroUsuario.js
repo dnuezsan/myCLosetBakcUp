@@ -97,7 +97,12 @@ export class VistaRegistroUsuario {
         let password = document.getElementById("password").value;
         let rpassword = document.getElementById("rpassword").value;
         let casilla = document.getElementById('aceptarPoliticaPrivacidad').checked
-        let respuesta = await Controlador.registraUsuario(nombre, correo, password, rpassword, casilla);
+        if (password != rpassword) {
+            let mensaje = document.querySelectorAll('#panelRegistro .mensajeLabel')[0]
+            mensaje.innerHTML = "Las contraseñas no coinciden"
+        }else{
+            
+            let respuesta = await Controlador.registraUsuario(nombre, correo, password, rpassword, casilla);
 
         if (respuesta.success) {
             VistaRegistroUsuario.esconderRegistro()
@@ -106,6 +111,8 @@ export class VistaRegistroUsuario {
             let mensaje = document.querySelectorAll('#panelRegistro .mensajeLabel')[0]
             mensaje.innerHTML = respuesta.mensaje
         }
+        }
+        
 
     }
 

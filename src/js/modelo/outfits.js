@@ -10,7 +10,7 @@ export class Outfits {
 
     /**
      * @constructor
-     *
+     *Crea una instancia de Outfits
      * @param {String} titulo
      * @param {String} descripcion
      * @memberof Outfits
@@ -65,6 +65,7 @@ export class Outfits {
      */
     static async modificarOutfit(idPrenda, idPrendaNueva, idOutfit, nombreOutfit) {
         let modificarOutfit = "modificarOutfit";
+        //console.log(idPrenda, idPrendaNueva, idOutfit, nombreOutfit);
         let datos = await $.ajax(
             {
                 url:  "https://05.2daw.esvirgua.com/myCloset/src/php/controlador/controladorBackend.php",

@@ -781,7 +781,9 @@ export class VistaGestionarPrendas {
             if (nombrePrendaOriginal.value == '') {
                 //Aquí gestion mensaje
             } else {
+                console.log(nombrePrendaOriginal.value);
                 let prendaOriginal = await VistaGestionarPrendas.extraerDatosPrendaPorId(nombrePrendaOriginal.value)
+                console.log(prendaOriginal);
                 let respuesta = null
 
                 if (nombreGestionPrenda.value == '') {
@@ -876,11 +878,13 @@ export class VistaGestionarPrendas {
         let subcategoriaPrendaOriginal = document.getElementById('subCategoriasPrendaGestionPrendas')
         let prendas = await Controlador.cargarDatosPrendas(subcategoriaPrendaOriginal.value)
 
-        prendas.forEach(prenda => {
-            if (prenda.idPrenda == idPrenda) {
-                return prenda
+        console.log(prendas);
+        for (let i = 0; i <prendas.length; i++) {
+            if (prendas[i].idPrenda == idPrenda) {
+                return prendas[i]
             }
-        });
+            
+        }
     }
 
 }

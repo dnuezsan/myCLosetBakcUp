@@ -104,11 +104,17 @@ export class VistaPerfilUsuario {
         let rnewpassword = document.getElementById("contraseniaRepetidaPerfil").value;
 
         botonModificarUsuario.onclick = async (evento) => {
-            let respuesta = await Controlador.modificacionUsuario(nombre, correo, password, newpassword, rnewpassword)
+            
+            let respuesta = null
+            if (nombre == '') {
+                respuesta = await Controlador.modificacionUsuario("Usuario sin nombre", correo, password, newpassword, rnewpassword)
+            } else {
+                respuesta = await Controlador.modificacionUsuario(nombre, correo, password, newpassword, rnewpassword)
+            }
 
             if (respuesta.success == true) {
                 VistaPerfilUsuario.actualizacionCuadroConfirmacion(respuesta.mensaje)
-                panelPerfilUsuario.onclick = async(evento) => {
+                panelPerfilUsuario.onclick = async (evento) => {
                     await VistaPerfilUsuario.ocultarCuadroConfirmacion()
                     location.reload()
                 }
@@ -231,7 +237,7 @@ export class VistaPerfilUsuario {
      * @static
      * @memberof VistaPerfilUsuario
      */
-    static limpiarFormulario(){
+    static limpiarFormulario() {
         let contrasenia = document.getElementById('contraseniaPerfil')
         let contraseniaNueva = document.getElementById('contraseniaNuevaPerfil')
         let contraseniaRepetida = document.getElementById('contraseniaRepetidaPerfil')
