@@ -16,7 +16,7 @@ switch ($_POST['propiedad']) {
         break;
     case "registrarse":
         $nombre = $_POST['nombre'];
-        $correo = $_SESSION['usuario'];
+        $correo = $_POST['correo'];
         $password = $_POST['password'];
         $rpassword = $_POST['rpassword'];
         registrar($nombre, $correo, $password, $rpassword);

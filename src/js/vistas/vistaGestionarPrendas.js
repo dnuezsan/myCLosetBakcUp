@@ -781,9 +781,7 @@ export class VistaGestionarPrendas {
             if (nombrePrendaOriginal.value == '') {
                 //Aquí gestion mensaje
             } else {
-                console.log(nombrePrendaOriginal.value);
                 let prendaOriginal = await VistaGestionarPrendas.extraerDatosPrendaPorId(nombrePrendaOriginal.value)
-                console.log(prendaOriginal);
                 let respuesta = null
 
                 if (nombreGestionPrenda.value == '') {
